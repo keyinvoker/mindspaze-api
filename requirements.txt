@@ -1,0 +1,25 @@
+alembic
+email-to
+fsspec
+gcsfs
+jsonschema
+pandas
+pg8000
+pysftp
+python-dotenv
+requests
+
+# [framework]
+Flask==2.1.0
+Flask-APScheduler
+Flask-Marshmallow
+Flask-Migrate
+Flask-RESTful
+Flask-SQLAlchemy
+Flask_WTF
+Marshmallow-SQLAlchemy
+Zeep
+
+# [server]
+Gunicorn
+Waitress
