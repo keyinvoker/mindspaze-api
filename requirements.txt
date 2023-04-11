@@ -9,6 +9,11 @@ pysftp
 python-dotenv
 requests
 
+# [ML]
+pickle
+pipeline
+
+
 # [framework]
 Flask==2.1.0
 Flask-APScheduler
@@ -17,8 +22,6 @@ Flask-Migrate
 Flask-RESTful
 Flask-SQLAlchemy
 Flask_WTF
-Marshmallow-SQLAlchemy
-Zeep
 
 # [server]
 Gunicorn

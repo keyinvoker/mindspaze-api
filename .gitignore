@@ -5,3 +5,4 @@ test
 pycache
 
 logs/*
+*.log
