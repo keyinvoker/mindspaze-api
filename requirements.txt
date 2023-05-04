@@ -12,10 +12,10 @@ requests
 # [ML]
 pickle
 pipeline
-
+scikit-learn
 
 # [framework]
-Flask==2.1.0
+Flask
 Flask-APScheduler
 Flask-Marshmallow
 Flask-Migrate
