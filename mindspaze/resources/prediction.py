@@ -1,4 +1,5 @@
 import pickle
+import os
 
 from flask_restful import Resource
 
@@ -12,8 +13,8 @@ class PredictionResource(Resource):
             }
         }
 
-        model_name = "mindspaze/machine_learning/models/svm_countVec_model.sav"
-        model_file = open(model_name, "wb")
+        model_name = f"{os.getcwd()}\mindspaze\machine_learning\models\svm_countVec_model.sav"
+        model_file = open(model_name, "rb")
         model = pickle.load(model_file)
  
         article_text = response.get("data").get("comment")
