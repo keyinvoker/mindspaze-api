@@ -13,6 +13,7 @@ requests
 pickle
 pipeline
 scikit-learn
+joblib
 
 # [framework]
 Flask

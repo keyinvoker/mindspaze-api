@@ -8,13 +8,12 @@ response = {
 }
 
 # model_name = f"{os.getcwd()}\mindspaze\machine_learning\models\svm_countVec_model.sav"
-model_name = "C:/Users/jojo/OneDrive/Email attachments/Dokumen/BackEnd/mindspaze-api/mindspaze/machine_learning/models/svm_countVec_model.sav"
-model_name2 = "C:/Users/jojo/OneDrive/Email attachments/Dokumen/BackEnd/mindspaze-api/mindspaze/machine_learning/models/svm_countVec_model2.sav"
+model_name = "C:/Users/jojo/OneDrive/Email attachments/Dokumen/BackEnd/mindspaze-api/mindspaze/resources/prediction.py"
 
-with open(model_name, "wb") as f:
-    pickle.dump(model_name2, f, protocol=4)
+with open(model_name, "rb") as f:
+    model = pickle.dump(mdf)
 
-with open(model_name2, "rb") as f:
+with open(model_name, "rb") as f:
     model = pickle.load(f)
 
 article_text = response.get("data").get("comment")
