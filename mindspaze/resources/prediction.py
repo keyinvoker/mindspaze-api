@@ -27,7 +27,10 @@ class PredictionResource(Resource):
             article_text = response.get("data").get("comment")
 
             with open(model_full_path, "rb") as f:
-                loaded_model = dill.load(f)  # TODO: cannot load model with any module: https://stackoverflow.com/questions/27732354/unable-to-load-files-using-pickle-and-multiple-modules
+                loaded_model = dill.load(f) 
+                # TODO: cannot load model with any module:
+                # (source: https://stackoverflow.com/questions/27732354/unable-to-load-files-using-pickle-and-multiple-modules)
+                # - lakuin dump dulu as a setup -> apakah harus setiap saat panggil API atau sekali aja?
                 
             print(loaded_model)
 
