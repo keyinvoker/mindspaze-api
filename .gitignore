@@ -2,7 +2,7 @@
 .env
 
 test
-pycache
+__pycache__
 
 logs/*
 *.log
