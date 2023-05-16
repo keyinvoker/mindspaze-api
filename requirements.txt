@@ -8,17 +8,20 @@ pg8000
 pysftp
 python-dotenv
 requests
+flask-shell-ipython
 
 # [ML]
-pickle
 pipeline
 scikit-learn
+pickle-mixin
 joblib
+dill
 
 # [framework]
 Flask
 Flask-APScheduler
 Flask-Marshmallow
+Marshmallow-SQLAlchemy
 Flask-Migrate
 Flask-RESTful
 Flask-SQLAlchemy

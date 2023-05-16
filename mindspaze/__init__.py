@@ -1,12 +1,11 @@
+from logging import getLogger
 from flask import Flask
+from flask_apscheduler import APScheduler
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
-from logging import getLogger
-from flask_apscheduler import APScheduler
 from flask_sqlalchemy import SQLAlchemy
 
 from mindspaze.blueprints import mindspaze_bp
-from mindspaze.blueprints.prediction import prediction_blueprint
 from mindspaze.config import Config
 
 app_logger = getLogger('app')
@@ -27,6 +26,7 @@ def create_app(test: bool = False) -> Flask:
         ma.init_app(app)
         migrate.init_app(app, db)
 
+        from mindspaze.blueprints.prediction import prediction_blueprint
         mindspaze_bp.register_blueprint(prediction_blueprint)
         app.register_blueprint(mindspaze_bp)
 
