@@ -26,8 +26,8 @@ def create_app(test: bool = False) -> Flask:
         ma.init_app(app)
         migrate.init_app(app, db)
 
-        from mindspaze.blueprints.prediction import prediction_blueprint
-        mindspaze_bp.register_blueprint(prediction_blueprint)
         app.register_blueprint(mindspaze_bp)
+
+        print(app.url_map.iter_rules())
 
         return app
