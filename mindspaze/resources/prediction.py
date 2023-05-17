@@ -5,6 +5,7 @@ from http import HTTPStatus
 from traceback import format_exc
 
 from mindspaze import error_logger
+# TODO: Implement server token authentication
 
 
 class PredictionResource(Resource):
@@ -23,6 +24,8 @@ class PredictionResource(Resource):
             model_name = "svm_countVec_model.sav"
             model_name = "nb_countVec_model.sav"
             model_full_path = directory + model_name
+
+            model_full_path = model_full_path.replace("\\", "/")
 
             article_text = response.get("data").get("comment")
 
