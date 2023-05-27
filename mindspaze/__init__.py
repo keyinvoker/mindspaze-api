@@ -5,7 +5,6 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from mindspaze.blueprints import mindspaze_bp
 from mindspaze.config import Config
 
 app_logger = getLogger('app')
@@ -26,7 +25,8 @@ def create_app(test: bool = False) -> Flask:
         ma.init_app(app)
         migrate.init_app(app, db)
 
-        app.register_blueprint(mindspaze_bp)
+        from mindspaze.blueprints.prediction import prediction_bp
+        app.register_blueprint(prediction_bp)
 
         print(app.url_map.iter_rules())
 

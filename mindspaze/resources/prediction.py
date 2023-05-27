@@ -18,8 +18,6 @@ class PredictionResource(Resource):
                 }
             }
 
-            # here = os.path.abspath(os.path.dirname(__file__))
-
             directory = f"{os.getcwd()}\mindspaze\machine_learning\models\\"
             model_name = "svm_countVec_model.sav"
             model_name = "nb_countVec_model.sav"
@@ -31,10 +29,7 @@ class PredictionResource(Resource):
 
             with open(model_full_path, "rb") as f:
                 loaded_model = dill.load(f) 
-                # TODO: cannot load model with any module:
-                # (source: https://stackoverflow.com/questions/27732354/unable-to-load-files-using-pickle-and-multiple-modules)
-                # - lakuin dump dulu as a setup -> apakah harus setiap saat panggil API atau sekali aja?
-                
+
             print(loaded_model)
 
             article_predict_loaded_model = loaded_model.predict([article_text])
