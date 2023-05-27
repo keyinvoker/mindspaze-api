@@ -29,4 +29,4 @@ Flask_WTF
 
 # [server]
 Gunicorn
-Waitress
+uWSGIi
