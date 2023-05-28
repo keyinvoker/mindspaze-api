@@ -19,7 +19,7 @@ class PredictionResource(Resource):
                 }
             }
 
-            directory = f"{current_app.config['_basedir']}\machine_learning\models\\"
+            directory = f"{current_app.config['BASEDIR']}\machine_learning\models\\"
             model_name = "svm_countVec_model.sav"
             model_name = "nb_countVec_model.sav"
             model_full_path = directory + model_name
