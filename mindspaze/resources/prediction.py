@@ -1,5 +1,6 @@
 import os
 import dill
+from flask import current_app
 from flask_restful import Resource
 from http import HTTPStatus
 from traceback import format_exc
@@ -18,7 +19,7 @@ class PredictionResource(Resource):
                 }
             }
 
-            directory = f"{os.getcwd()}\mindspaze\machine_learning\models\\"
+            directory = f"{current_app.config['_basedir']}\machine_learning\models\\"
             model_name = "svm_countVec_model.sav"
             model_name = "nb_countVec_model.sav"
             model_full_path = directory + model_name

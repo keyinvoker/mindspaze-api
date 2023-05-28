@@ -67,4 +67,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = DB_CONNECT_STRING
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    _basedir = here
+    
     dictConfig(LOGGING_CONFIG)
