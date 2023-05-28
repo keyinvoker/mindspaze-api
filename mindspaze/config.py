@@ -68,6 +68,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = DB_CONNECT_STRING
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    BASEDIR = here
-    
     dictConfig(LOGGING_CONFIG)
