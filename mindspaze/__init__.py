@@ -25,9 +25,12 @@ def create_app(test: bool = False) -> Flask:
         ma.init_app(app)
         migrate.init_app(app, db)
 
+        from mindspaze.cli import prediction_cli
+        app.cli.add_command(prediction_cli)
+
         from mindspaze.blueprints.prediction import prediction_bp
         app.register_blueprint(prediction_bp)
 
-        print(app.url_map.iter_rules())
+        print(f"\Endpoints:\n{app.url_map.iter_rules}\n")
 
         return app
