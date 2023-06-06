@@ -1,4 +1,3 @@
-import json
 from flask import Response, request
 from flask_restful import Resource
 from http import HTTPStatus
@@ -9,6 +8,7 @@ from mindspaze.controllers.prediction_controller import (
     PredictionController
 )
 from mindspaze.schemas.prediction import InputDataSchema
+from mindspaze.tools.response import make_json_response
 
 
 class PredictionResource(Resource):
@@ -27,15 +27,10 @@ class PredictionResource(Resource):
 
             validation_error = InputDataSchema().validate(data_args)
             if validation_error:
-                return Response(
-                    response=json.dumps(
-                        {
-                            "message": "Input data did not pass validation",
-                            "data": dict(validation_error=validation_error)
-                        }
-                    ),
+                return make_json_response(
                     status=HTTPStatus.BAD_REQUEST,
-                    mimetype="application/json"
+                    message="Input data did not pass validation",
+                    data=validation_error
                 )
 
             payload = InputDataSchema().load(data_args)
@@ -45,16 +40,14 @@ class PredictionResource(Resource):
             is_hoax = PredictionController().predict(article_text)
 
             data = dict(is_hoax=is_hoax)
-            return Response(
-                response=json.dumps(data),
+            return make_json_response(
                 status=HTTPStatus.OK,
-                mimetype="application/json"
+                data=data
             )
 
         except Exception as e:
             error_logger.error(f"Error on Prediction [POST] :: {e}, {format_exc()}")
-            return Response(
-                response=json.dumps(dict(error=str(e))),
-                http_status=HTTPStatus.BAD_REQUEST,
-                mimetype="application/json"
+            return make_json_response(
+                status=HTTPStatus.BAD_REQUEST,
+                data=str(e)
             )
