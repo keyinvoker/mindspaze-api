@@ -1,0 +1,17 @@
+[Unit]
+Description="uWSGI server instance for MindSpaze"
+After=network.target
+
+[Service]
+Type=forking
+User=mindspaze
+Group=www-data
+PIDFile=/srv/mindspaze/uwsgi/mindspaze-uwsgi.pid
+WorkingDirectory=/srv/mindspaze/www
+EnvironmentFile=/srv/mindspaze/www/.env
+ExecStart=/srv/mindspaze/www/.venv/bin/uwsgi /srv/mindspaze/www/uwsgi/uwsgi.dev.ini
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
