@@ -28,7 +28,7 @@ class PredictionResource(Resource):
             validation_error = InputDataSchema().validate(data_args)
             if validation_error:
                 return make_json_response(
-                    status=HTTPStatus.BAD_REQUEST,
+                    http_status=HTTPStatus.BAD_REQUEST,
                     message="Input data did not pass validation",
                     data=validation_error
                 )
@@ -41,13 +41,13 @@ class PredictionResource(Resource):
 
             data = dict(is_hoax=is_hoax)
             return make_json_response(
-                status=HTTPStatus.OK,
+                http_status=HTTPStatus.OK,
                 data=data
             )
 
         except Exception as e:
             error_logger.error(f"Error on Prediction [POST] :: {e}, {format_exc()}")
             return make_json_response(
-                status=HTTPStatus.BAD_REQUEST,
+                http_status=HTTPStatus.BAD_REQUEST,
                 data=str(e)
             )
