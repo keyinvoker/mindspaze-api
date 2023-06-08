@@ -14,15 +14,6 @@ from mindspaze.tools.response import make_json_response
 class PredictionResource(Resource):
     def post(self) -> Response:
         try:
-            """
-            TODO: needs coordination with FE
-            response = {
-                "data": {
-                    "name": "JoJo",
-                    "comment": "Donald Trump is a beauty ambassador."
-                }
-            }
-            """
             data_args = request.get_json()
 
             validation_error = InputDataSchema().validate(data_args)
@@ -36,7 +27,7 @@ class PredictionResource(Resource):
             payload = InputDataSchema().load(data_args)
             app_logger.info(f"Prediction [POST] :: payload: {payload}")
 
-            article_text = payload.get("data").get("comment")  # TODO
+            article_text = payload.get("article_text")
             is_hoax = PredictionController().predict(article_text)
 
             data = dict(is_hoax=is_hoax)

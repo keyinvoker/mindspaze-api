@@ -8,7 +8,7 @@ from marshmallow import (
 
 
 class InputDataSchema(Schema):
-    comment = fields.String(required=True)
+    article_text = fields.String(required=True)
 
     class Meta:
         ordered = True
