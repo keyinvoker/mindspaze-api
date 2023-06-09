@@ -37,7 +37,7 @@ class PredictionResource(Resource):
             )
 
         except Exception as e:
-            error_logger.error(f"Error on Prediction [POST] :: {e}, {format_exc()}")
+            error_logger.error(f"Error on Prediction [POST] :: {e}\n{format_exc()}")
             return make_json_response(
                 http_status=HTTPStatus.BAD_REQUEST,
                 data=str(e)
