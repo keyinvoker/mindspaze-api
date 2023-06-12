@@ -1,9 +1,6 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-# from sumy.parsers.plaintext import PlaintextParser
-# from sumy.nlp.tokenizers import Tokenizer
-# from sumy.summarizers.lsa import LsaSummarizer
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -18,17 +15,3 @@ def clean_text(text: str) -> str:
     cleaned_text = ' '.join(cleaned_tokens)
     
     return cleaned_text
-
-
-# # Create a parser and tokenizer for the cleaned text
-# parser = PlaintextParser.from_string(cleaned_text, Tokenizer('english'))
-
-# # Initialize the summarizer
-# summarizer = LsaSummarizer()
-
-# # Summarize the text with a ratio of 0.3 (30% of the original text)
-# summary = summarizer(parser.document, 0.3)
-
-# # Print the summarized text
-# for sentence in summary:
-#     print(sentence)
