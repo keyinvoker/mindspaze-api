@@ -16,6 +16,8 @@ scikit-learn
 pickle-mixin
 joblib
 dill
+nltk
+sumy
 
 # [framework]
 Flask

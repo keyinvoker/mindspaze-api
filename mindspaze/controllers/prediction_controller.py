@@ -6,6 +6,7 @@ from http import HTTPStatus
 from sklearn.pipeline import Pipeline
 from typing import List, Optional
 
+from mindspaze.helpers.prediction import clean_text
 from mindspaze.tools.strings import remove_special_characters
 
 TRUE_VALUES = [
@@ -64,6 +65,8 @@ class PredictionController:
         return is_hoax
 
     def predict_with_google(self, text: str) -> List[Optional[bool]]:
+        text = clean_text(text)
+
         params = {
             "query": text,
             "key": self.google_fact_checker_token,
