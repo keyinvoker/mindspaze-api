@@ -43,7 +43,7 @@ class PredictionController:
         self.google_fact_checker_endpoint = current_app.config.get("GOOGLE_FACT_CHECKER_ENDPOINT")
         self.google_fact_checker_token = current_app.config.get("GOOGLE_FACT_CHECKER_TOKEN")
 
-    def check_if_hoax(self, booleans: List[bool]) -> bool:
+    def check_if_hoax(self, booleans: List[str]) -> bool:
         true_count = 0
         false_count = 0
         for boolean in booleans:
