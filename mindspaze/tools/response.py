@@ -8,13 +8,7 @@ from mindspaze.schemas.response import (
     DefaultStringResponseSchema,
 )
 
-default_messages = {
-    HTTPStatus.OK: "OK",
-    HTTPStatus.CREATED: "Successfully Created",
-    HTTPStatus.BAD_REQUEST: "Bad Request",
-    HTTPStatus.UNPROCESSABLE_ENTITY: "Unprocessable Entity",
-    HTTPStatus.NOT_FOUND: "Not Found"
-}
+default_messages = {status: status.name.replace("_", " ").title() for status in HTTPStatus}
 
 
 def make_json_response(
