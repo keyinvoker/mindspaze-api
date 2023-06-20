@@ -55,7 +55,7 @@ class PredictionController:
         
         return true_count > false_count
 
-    def predict_with_model(self, text: str):
+    def predict_with_model(self, text: str) -> bool:
         with open(self.model_file_path, "rb") as f:
             loaded_model: Pipeline = dill.load(f)
 
