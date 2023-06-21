@@ -8,7 +8,7 @@ from mindspaze.schemas.response import (
     DefaultStringResponseSchema,
 )
 
-default_message: dict = {
+default_messages: dict = {
     status: status.name.replace("_", " ").title()
     for status in HTTPStatus
 }
@@ -21,7 +21,7 @@ def make_json_response(
 ) -> Response:
 
     if not message:
-        message = default_message[http_status]
+        message = default_messages[http_status]
 
     if data:
         if data == {}:
