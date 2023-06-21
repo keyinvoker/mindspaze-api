@@ -1,24 +1,27 @@
 import json
 from http import HTTPStatus
 from flask import Response
-from typing import Union
+from typing import Optional, Union
 
 from mindspaze.schemas.response import (
     DefaultResponseSchema,
     DefaultStringResponseSchema,
 )
 
-default_messages = {status: status.name.replace("_", " ").title() for status in HTTPStatus}
+default_message: dict = {
+    status: status.name.replace("_", " ").title()
+    for status in HTTPStatus
+}
 
 
 def make_json_response(
     http_status: Union[HTTPStatus, int],
-    data: dict = None,
-    message="",
+    data: Optional[dict] = None,
+    message: str = "",
 ) -> Response:
-    
-    if not message and http_status in default_messages:
-        message = default_messages[http_status]
+
+    if not message:
+        message = default_message[http_status]
 
     if data:
         if data == {}:
