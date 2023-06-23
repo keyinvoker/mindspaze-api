@@ -1,14 +1,10 @@
-from marshmallow import (
-    EXCLUDE,
-    fields,
-    Schema,
-    validate,
-    validates_schema,
-)
+from marshmallow import EXCLUDE, fields
+
+from mindspaze import ma
 
 
-class InputDataSchema(Schema):
-    article_text = fields.String(required=True)
+class InputDataSchema(ma.Schema):
+    answers = fields.Raw(required=True)
 
     class Meta:
         ordered = True

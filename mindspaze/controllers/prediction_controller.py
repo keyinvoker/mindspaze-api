@@ -4,8 +4,9 @@ import requests
 from flask import current_app
 from http import HTTPStatus
 from sklearn.pipeline import Pipeline
-from typing import List, Optional
+from typing import Dict, List, Optional
 
+from mindspaze import app_logger, error_logger
 from mindspaze.helpers.prediction import clean_text
 from mindspaze.tools.strings import remove_special_characters
 
@@ -47,10 +48,10 @@ class PredictionController:
         true_count = 0
         false_count = 0
         for boolean in booleans:
-            boolean = boolean.split()
-            if any(boolean in true_values for true_values in TRUE_VALUES):
+            segments = boolean.split()
+            if any(segment in TRUE_VALUES for segment in segments):
                 true_count += 1
-            if any(boolean in false_values for false_values in FALSE_VALUES):
+            if any(segment in FALSE_VALUES for segment in segments):
                 false_count += 1
         
         return true_count > false_count
@@ -73,13 +74,17 @@ class PredictionController:
             "languageCode": "en-US",
         }
 
+        app_logger.info(f"params: {params}")
+
         response = requests.get(
             url=self.google_fact_checker_endpoint,
             params=params,
         )
         http_status = response.status_code
+        payload = response.json()
 
-        if http_status != HTTPStatus.OK:
+        if http_status != HTTPStatus.OK or not payload:
+            error_logger.error(f"predict_with_google() :: status: {http_status}, payload: {payload}")
             return []
 
         claims = response.json().get("claims")
@@ -88,6 +93,8 @@ class PredictionController:
                 x.get("claimReview")[0].get("textualRating").lower()
             )
         )
+        app_logger.info(f"get_rating: {get_rating}")
+        app_logger.info(f"claims: {claims}")
         ratings = list(map(get_rating, claims))
         ratings = self.check_if_hoax(ratings)
 
@@ -97,3 +104,11 @@ class PredictionController:
         model_rating = self.predict_with_model(text)
         google_rating = self.predict_with_google(text)
         return model_rating and google_rating
+    
+    def bulk_predict(self, payload: Dict[int, str]) -> Dict[int, bool]:
+        result = dict()
+        for id, text in payload.items():
+            is_hoax = self.predict(text)
+            result[id] = is_hoax
+            app_logger.info(f"bulk_predict() :: id: {id}, text: \"{text}\", is_hoax: {is_hoax}")
+        return result
