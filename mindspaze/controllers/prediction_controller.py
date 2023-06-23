@@ -74,8 +74,6 @@ class PredictionController:
             "languageCode": "en-US",
         }
 
-        app_logger.info(f"params: {params}")
-
         response = requests.get(
             url=self.google_fact_checker_endpoint,
             params=params,
@@ -93,11 +91,9 @@ class PredictionController:
                 x.get("claimReview")[0].get("textualRating").lower()
             )
         )
-        app_logger.info(f"get_rating: {get_rating}")
-        app_logger.info(f"claims: {claims}")
+
         ratings = list(map(get_rating, claims))
         ratings = self.check_if_hoax(ratings)
-
         return ratings
 
     def predict(self, text: str) -> bool:
