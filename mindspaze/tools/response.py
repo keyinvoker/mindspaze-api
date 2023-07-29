@@ -9,7 +9,9 @@ from mindspaze.schemas.response import (
 )
 
 default_messages: dict = {
-    status: status.name.replace("_", " ").title()
+    status: status.name
+    if status in [HTTPStatus.OK, HTTPStatus.IM_USED]
+    else status.name.replace("_", " ").title()
     for status in HTTPStatus
 }
 
