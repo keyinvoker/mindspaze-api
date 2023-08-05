@@ -38,6 +38,7 @@ class PredictionController:
             _directory = f"{_here}/mindspaze/machine_learning/models/"
         else:
             _directory = f"{_here}/machine_learning/models/"
+
         self.model_name = "svm_countVec_model.sav"
         self.model_name = "nb_countVec_model.sav"
         self.model_file_path = _directory + self.model_name
@@ -65,7 +66,7 @@ class PredictionController:
 
         return is_hoax
 
-    def predict_with_google(self, text: str) -> Tuple[bool, List[Optional[bool]]]:
+    def predict_with_google(self, text: str) -> List[Optional[bool]]:
         text = clean_text(text)
 
         params = {
@@ -83,7 +84,7 @@ class PredictionController:
 
         if http_status != HTTPStatus.OK or not payload:
             error_logger.error(f"predict_with_google() :: status: {http_status}, payload: {payload}")
-            return False, None
+            return []
 
         claims = response.json().get("claims")
         get_rating = lambda x: (
@@ -94,13 +95,13 @@ class PredictionController:
 
         ratings = list(map(get_rating, claims))
         ratings = self.check_if_hoax(ratings)
-        return True, ratings
+        return ratings
 
     def predict(self, text: str) -> bool:
         model_rating = self.predict_with_model(text)
 
-        status, google_rating = self.predict_with_google(text)
-        if not status:
+        google_rating = self.predict_with_google(text)
+        if not google_rating:
             return model_rating
 
         return model_rating and google_rating
