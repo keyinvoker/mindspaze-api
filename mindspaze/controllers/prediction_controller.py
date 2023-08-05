@@ -4,7 +4,7 @@ import requests
 from flask import current_app
 from http import HTTPStatus
 from sklearn.pipeline import Pipeline
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from mindspaze import app_logger, error_logger
 from mindspaze.helpers.prediction import clean_text
@@ -65,7 +65,7 @@ class PredictionController:
 
         return is_hoax
 
-    def predict_with_google(self, text: str) -> List[Optional[bool]]:
+    def predict_with_google(self, text: str) -> Tuple[bool, List[Optional[bool]]]:
         text = clean_text(text)
 
         params = {
@@ -83,7 +83,7 @@ class PredictionController:
 
         if http_status != HTTPStatus.OK or not payload:
             error_logger.error(f"predict_with_google() :: status: {http_status}, payload: {payload}")
-            return []
+            return False, None
 
         claims = response.json().get("claims")
         get_rating = lambda x: (
@@ -94,17 +94,23 @@ class PredictionController:
 
         ratings = list(map(get_rating, claims))
         ratings = self.check_if_hoax(ratings)
-        return ratings
+        return True, ratings
 
     def predict(self, text: str) -> bool:
         model_rating = self.predict_with_model(text)
-        google_rating = self.predict_with_google(text)
+
+        status, google_rating = self.predict_with_google(text)
+        if not status:
+            return model_rating
+
         return model_rating and google_rating
     
     def bulk_predict(self, payload: Dict[int, str]) -> Dict[int, bool]:
         result = dict()
+
         for id, text in payload.items():
-            is_hoax = self.predict(text)
+            is_hoax: bool = self.predict(text)
             result[id] = is_hoax
             app_logger.info(f"bulk_predict() :: id: {id}, text: \"{text}\", is_hoax: {is_hoax}")
+
         return result
