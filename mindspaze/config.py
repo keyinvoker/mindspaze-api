@@ -17,7 +17,7 @@ load_dotenv(find_dotenv())
 
 class Config:
     SECRET_KEY = env.string("SECRET_KEY", "secret")
-    IS_LOCAL_SERVER = env.bool("IS_LOCAL_SERVER", "false")
+    IS_LOCAL_SERVER = env.bool("IS_LOCAL_SERVER", False)
 
     # DB Config
     DB_HOST = env.string("DB_HOST", "localhost")

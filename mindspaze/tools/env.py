@@ -16,6 +16,9 @@ class Env:
             return value
 
         value =  getenv(value, default)
-        if value.lower() in ["true", "t", "1"]:
+        if (
+            isinstance(value, str) and
+            value.lower() in ["true", "t", "1"]
+        ):
             return True
         return False
