@@ -4,7 +4,7 @@ import requests
 from flask import current_app
 from http import HTTPStatus
 from sklearn.pipeline import Pipeline
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Union
 
 from mindspaze import app_logger, error_logger
 from mindspaze.helpers.prediction import clean_text
@@ -97,12 +97,10 @@ class PredictionController:
         ratings = self.check_if_hoax(ratings)
         return ratings
 
-    def predict(self, text: str) -> bool:
+    def predict(self, text: str) -> Union[bool, List[None]]:
         model_rating = self.predict_with_model(text)
 
         google_rating = self.predict_with_google(text)
-        if not google_rating:
-            return model_rating
 
         return model_rating and google_rating
     
